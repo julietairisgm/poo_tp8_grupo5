@@ -1,6 +1,7 @@
 package ar.edu.unju.fi.poo;
 
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,20 +14,20 @@ public class ManagerEmpleado {
     public ManagerEmpleado() {
         empleados = new ArrayList<>();
         // Profesionales
-        Profesional p1 = new Profesional("1", 12345678, "Ana Lopez",LocalDate.of(2020, 3, 10),2);
+        Profesional p1 = new Profesional("0001-26", 12345678, "Ana Lopez",LocalDate.of(2020, 3, 10),2);
         p1.agregarTitulo(new Titulo(2022, "Ingeniería Informática", "Universitario"));
-        Profesional p2 = new Profesional("2", 23456789, "Carlos Herrera",LocalDate.of(2018, 5, 15),1);
+        Profesional p2 = new Profesional("0002-26", 23456789, "Carlos Herrera",LocalDate.of(2018, 5, 15),1);
         p2.agregarTitulo(new Titulo(2020, "Licenciatura en Sistemas", "Universitario"));
         p2.agregarTitulo(new Titulo(2023, "Programación", "Terciario"));
 
         // Administrativos
-        Administrativo a1 = new Administrativo("3", 34567890, "Laura Gomez",LocalDate.of(2021, 2, 20),3,"A");
-        Administrativo a2 = new Administrativo("4", 45678901, "Pedro Sanchez",LocalDate.of(2019, 7, 1),0,"B");
-        Administrativo a3 = new Administrativo("5", 34567860, "Susana Gomez",LocalDate.of(2022, 3, 10),1,"A");
+        Administrativo a1 = new Administrativo("0003-26", 34567890, "Laura Gomez",LocalDate.of(2021, 2, 20),3,"A");
+        Administrativo a2 = new Administrativo("0004-26", 45678901, "Pedro Sanchez",LocalDate.of(2019, 7, 1),0,"B");
+        Administrativo a3 = new Administrativo("0005-26", 34567860, "Susana Gomez",LocalDate.of(2022, 3, 10),1,"A");
 
         // Limpieza
-        Limpieza l1 = new Limpieza("6", 56789012, "Marta Diaz",LocalDate.of(2022, 1, 10),2);
-        Limpieza l2 = new Limpieza("7", 67890123, "Juan Perez",LocalDate.of(2017, 11, 5), 1);
+        Limpieza l1 = new Limpieza("0006-26", 56789012, "Marta Diaz",LocalDate.of(2022, 1, 10),2);
+        Limpieza l2 = new Limpieza("0007-26", 67890123, "Juan Perez",LocalDate.of(2017, 11, 5), 1);
 
         // Agregar empleados a la lista
         empleados.add(p1);
@@ -39,7 +40,9 @@ public class ManagerEmpleado {
     }
     
     public boolean agregarEmpleado(Empleado empleado) {
+    	validarLegajo(empleado.getLegajo());
     	validarDocumento(empleado.getDocumento());
+    	
         if (buscarLegajo(empleado.getLegajo()) != null) {
             return false;
         }
@@ -56,6 +59,7 @@ public class ManagerEmpleado {
         return null;
     }
     
+    //Metodo para validar DNI
     private void validarDocumento(int documento) {
         for (Empleado empleado : empleados) {
             if (empleado.getDocumento() == documento) {
@@ -63,6 +67,32 @@ public class ManagerEmpleado {
                     "Ya existe un empleado con ese documento."
                 );
             }
+        }
+    }
+    
+    // Metodo para validar el legajo
+    private void validarLegajo(String legajo) {
+        validarFormatoLegajo(legajo);
+        validarAnioLegajo(legajo);
+    }
+    
+    //Metodo auxiliar para validar que el legajo cumpla el formato esperado
+    private void validarFormatoLegajo(String legajo) {
+        if (legajo == null || !legajo.matches("\\d{4}-\\d{2}")) {
+            throw new ValidacionException(
+                "El legajo debe tener el formato NNNN-AA."
+            );
+        }
+    }
+    
+    // Metodo auxiliar que valida que los ultimos 2 digitos sean del anio actual
+    private void validarAnioLegajo(String legajo) {
+        String anioActual = String.valueOf(Year.now().getValue()).substring(2);
+
+        if (!legajo.endsWith("-" + anioActual)) {
+            throw new ValidacionException(
+                "Los dos últimos dígitos del legajo deben coincidir con el año actual."
+            );
         }
     }
     
