@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class Limpieza extends Empleado {
 
-    public Limpieza(int legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
+    public Limpieza(String legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
         super(legajo, documento, nombre, fechaIngreso, cantidadHijos);
     }
 

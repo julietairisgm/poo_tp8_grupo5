@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class Administrativo extends Empleado {
     private String categoria; 
 
-    public Administrativo(int legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos, String categoria) {
+    public Administrativo(String legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos, String categoria) {
         super(legajo, documento, nombre, fechaIngreso, cantidadHijos);
         this.categoria = categoria.toUpperCase();
     }

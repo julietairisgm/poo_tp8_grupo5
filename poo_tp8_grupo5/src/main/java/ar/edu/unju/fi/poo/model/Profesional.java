@@ -8,7 +8,7 @@ import java.util.List;
 public class Profesional extends Empleado {
     private List<Titulo> titulos;
 
-    public Profesional(int legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
+    public Profesional(String legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
         super(legajo, documento, nombre, fechaIngreso, cantidadHijos);
         this.titulos = new ArrayList<>();
     }

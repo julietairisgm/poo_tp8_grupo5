@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.Period;
 
 public abstract class Empleado {
-    protected int legajo;
+    protected String legajo;
     protected int documento;
     protected String nombre;
     protected LocalDate fechaIngreso;
@@ -12,7 +12,7 @@ public abstract class Empleado {
     protected double sueldoBasico = 400000.0; 
 
     // Constructor
-    public Empleado(int legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
+    public Empleado(String legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
         this.legajo = legajo;
         this.documento = documento;
         this.nombre = nombre;
@@ -47,7 +47,7 @@ public abstract class Empleado {
     }
 
     // Getters 
-    public int getLegajo() {
+    public String getLegajo() {
         return legajo;
     }
 
