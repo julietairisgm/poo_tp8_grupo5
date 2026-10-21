@@ -2,6 +2,7 @@ package ar.edu.unju.fi.poo;
 
 import java.time.LocalDate;
 import java.time.Year;
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -87,13 +88,41 @@ public class ManagerEmpleado {
     
     // Metodo auxiliar que valida que los ultimos 2 digitos sean del anio actual
     private void validarAnioLegajo(String legajo) {
-        String anioActual = String.valueOf(Year.now().getValue()).substring(2);
+    	String anioActual = obtenerAnioActual();
 
         if (!legajo.endsWith("-" + anioActual)) {
             throw new ValidacionException(
                 "Los dos últimos dígitos del legajo deben coincidir con el año actual."
             );
         }
+    }
+    
+    public String obtenerNuevoLegajo() {
+        return generarLegajo();
+    }
+    
+    // Metodo para generar legajos
+    private String generarLegajo() {
+        String anioActual = obtenerAnioActual();
+        String legajo;
+
+        do {
+            legajo = generarNumeroLegajo() + "-" + anioActual;
+        } while (buscarLegajo(legajo) != null);
+
+        return legajo;
+    }
+    // Metodo auxiliar para generar numero de legajo aleatorio
+    private String generarNumeroLegajo() {
+        Random random = new Random();
+        int numero = random.nextInt(10000);
+
+        return String.format("%04d", numero);
+    }
+
+    // Metodo auxiliar para obtener el anio actual
+    private String obtenerAnioActual() {
+        return String.valueOf(Year.now().getValue()).substring(2);
     }
     
     public List<Administrativo> obtenerAdministrativosPorCategoria(String categoria) {
