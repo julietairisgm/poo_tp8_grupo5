@@ -43,7 +43,7 @@ public class ManagerEmpleado {
     public boolean agregarEmpleado(Empleado empleado) {
     	validarLegajo(empleado.getLegajo());
     	validarDocumento(empleado.getDocumento());
-    	
+    	validarTitulosProfesional(empleado);
         if (buscarLegajo(empleado.getLegajo()) != null) {
             return false;
         }
@@ -75,6 +75,16 @@ public class ManagerEmpleado {
     private void validarLegajo(String legajo) {
         validarFormatoLegajo(legajo);
         validarAnioLegajo(legajo);
+    }
+    
+    // Metodo para validar que un profesional tenga al menos un título
+    private void validarTitulosProfesional(Empleado empleado) {
+        if (empleado instanceof Profesional) {
+            Profesional prof = (Profesional) empleado;
+            if (prof.getTitulos() == null || prof.getTitulos().isEmpty()) {
+                throw new ValidacionException("Un profesional debe tener al menos un titulo registrado.");
+            }
+        }
     }
     
     //Metodo auxiliar para validar que el legajo cumpla el formato esperado

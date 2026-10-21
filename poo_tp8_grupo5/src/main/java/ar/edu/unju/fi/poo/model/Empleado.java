@@ -2,6 +2,7 @@ package ar.edu.unju.fi.poo.model;
 
 import java.time.LocalDate;
 import java.time.Period;
+import ar.edu.unju.fi.poo.exception.ValidacionException; 
 
 public abstract class Empleado {
     protected String legajo;
@@ -13,7 +14,13 @@ public abstract class Empleado {
 
     // Constructor
     public Empleado(String legajo, int documento, String nombre, LocalDate fechaIngreso, int cantidadHijos) {
-        this.legajo = legajo;
+    	if (fechaIngreso == null || fechaIngreso.isAfter(LocalDate.now())) {
+            throw new ValidacionException("La fecha de ingreso debe ser menor o igual a la fecha del sistema.");
+        }
+        if (cantidadHijos < 0 || cantidadHijos > 5) {
+            throw new ValidacionException("La cantidad de hijos debe estar entre 0 y 5.");
+        }    	
+    	this.legajo = legajo;
         this.documento = documento;
         this.nombre = nombre;
         this.fechaIngreso = fechaIngreso;
