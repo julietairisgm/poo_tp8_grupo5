@@ -81,3 +81,41 @@ class ManagerEmpleadoTest {
         assertTrue(managerEmpleado.getEmpleados().size() >= 5);
     }
 }
+
+@Test
+    @DisplayName("Uso de assertNull: Buscar legajo inexistente retorna null")
+    void testBuscarLegajoInexistenteRetornaNull() {
+        Empleado emp = managerEmpleado.getEmpleados().stream()
+                .filter(e -> e.getLegajo().equals("9999-26"))
+                .findFirst()
+                .orElse(null);
+
+        assertNull(emp, "Debe retornar null cuando el legajo buscado no existe.");
+    }
+
+    @Test
+    @DisplayName("Validacion C + assertThrows: Fecha de ingreso futura lanza ValidacionException")
+    void testFechaIngresoFuturaLanzaExcepcion() {
+        LocalDate fechaFutura = LocalDate.now().plusDays(2);
+
+        assertThrows(ValidacionException.class, () -> {
+            new Limpieza("1006-26", 99900006, "Empleado Invalido", fechaFutura, 1);
+        }, "Debe lanzar ValidacionException si la fecha de ingreso es mayor a la del sistema.");
+    }
+
+    @ParameterizedTest
+    @ValueSource(ints = {-1, 6, 10})
+    @DisplayName("Validacion D + @ParameterizedTest + @ValueSource + assertThrows: Cantidad de hijos invalida")
+    void testCantidadHijosInvalidaLanzaExcepcion(int cantidadHijosInvalida) {
+        assertThrows(ValidacionException.class, () -> {
+            new Administrativo("1007-26", 99900007, "Prueba Hijos", LocalDate.now(), cantidadHijosInvalida, "A");
+        }, "Debe lanzar ValidacionException si la cantidad de hijos no esta entre 0 y 5.");
+    }
+
+    @Disabled("Prueba deshabilitada explícitamente para cumplir el requisito de la etiqueta @Disabled")
+    @Test
+    @DisplayName("Uso de la etiqueta @Disabled")
+    void testPruebaDeshabilitada() {
+        fail("Este test esta marcado con @Disabled y no debe ejecutarse.");
+    }
+}
