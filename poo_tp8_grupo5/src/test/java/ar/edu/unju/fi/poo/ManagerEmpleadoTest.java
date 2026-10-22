@@ -86,7 +86,6 @@ class ManagerEmpleadoTest {
     void testListaNoVaciaRepetida() {
         assertTrue(managerEmpleado.getEmpleados().size() >= 5);
     }
-}
 
 @Test
     @DisplayName("Buscar legajo inexistente")
