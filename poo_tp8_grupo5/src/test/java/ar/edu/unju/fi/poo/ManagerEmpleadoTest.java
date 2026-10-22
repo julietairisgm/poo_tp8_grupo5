@@ -89,7 +89,7 @@ class ManagerEmpleadoTest {
 }
 
 @Test
-    @DisplayName("Uso de assertNull: Buscar legajo inexistente retorna null")
+    @DisplayName("Buscar legajo inexistente")
     void testBuscarLegajoInexistenteRetornaNull() {
         Empleado emp = managerEmpleado.getEmpleados().stream()
                 .filter(e -> e.getLegajo().equals("9999-26"))
@@ -100,7 +100,7 @@ class ManagerEmpleadoTest {
     }
 
     @Test
-    @DisplayName("Validacion C + assertThrows: Fecha de ingreso futura lanza ValidacionException")
+    @DisplayName("Fecha de ingreso futura")
     void testFechaIngresoFuturaLanzaExcepcion() {
         LocalDate fechaFutura = LocalDate.now().plusDays(2);
 
@@ -111,7 +111,7 @@ class ManagerEmpleadoTest {
 
     @ParameterizedTest
     @ValueSource(ints = {-1, 6, 10})
-    @DisplayName("Validacion D + @ParameterizedTest + @ValueSource + assertThrows: Cantidad de hijos invalida")
+    @DisplayName("Cantidad de hijos invalida")
     void testCantidadHijosInvalidaLanzaExcepcion(int cantidadHijosInvalida) {
         assertThrows(ValidacionException.class, () -> {
             new Administrativo("1007-26", 99900007, "Prueba Hijos", LocalDate.now(), cantidadHijosInvalida, "A");
