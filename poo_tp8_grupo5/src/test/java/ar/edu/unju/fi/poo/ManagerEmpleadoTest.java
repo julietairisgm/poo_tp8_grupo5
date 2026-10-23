@@ -82,4 +82,31 @@ class ManagerEmpleadoTest {
     void testPruebaDeshabilitada() {
         fail("Este test esta marcado con @Disabled y no debe ejecutarse.");
     }
+    
+    @Test
+    @DisplayName("Generar un nuevo legajo con formato correcto")
+    void testObtenerNuevoLegajo() {
+        String nuevoLegajo = managerEmpleado.obtenerNuevoLegajo();
+        assertTrue(nuevoLegajo.matches("\\d{4}-\\d{2}"), "El legajo debe tener el formato NNNN-AA");
+    }
+    
+    @Test
+    @DisplayName("Obtener administrativos por categoria A")
+    void testObtenerAdministrativosPorCategoria() {
+        var administrativosA = managerEmpleado.obtenerAdministrativosPorCategoria("A");
+        assertEquals(2, administrativosA.size(), "Deberia encontrar 2 administrativos de categoria A");
+        
+        var administrativosB = managerEmpleado.obtenerAdministrativosPorCategoria("B");
+        assertEquals(1, administrativosB.size(), "Deberia encontrar 1 administrativo de categoria B");
+    }
+    
+    @Test
+    @DisplayName("Calcular sueldo neto acumulado por tipo de empleado")
+    void testCalcularNetoAcumulado() {
+        double netoProfesionales = managerEmpleado.calcularNetoAcumulado("profesional");
+        assertTrue(netoProfesionales > 0, "El neto acumulado de los profesionales debe ser mayor a 0");
+        
+        double netoInexistente = managerEmpleado.calcularNetoAcumulado("gerente");
+        assertEquals(0.0, netoInexistente, "Si el tipo no existe, el acumulado debe ser 0");
+    }
 }
